@@ -167,6 +167,15 @@ class ChekoutActivity : BaseActivity<ActivityChekoutBinding>() {
             }
 
             btnSubmit.setOnClickListener {
+                transaksi.forEach {
+                    CoroutineScope(Main).launch {
+                        val barang = db.getMenuBarang().selectBarangByKode(it.kode_barang)
+                        val newBarang = barang
+                        newBarang.stok = barang.stok-it.jumlah
+                        db.getMenuBarang().insert(newBarang)
+                    }
+                }
+
                 if (order.isNullOrEmpty()){
                     CoroutineScope(Main).launch {
                         db.getTransaksi().deleteAll()

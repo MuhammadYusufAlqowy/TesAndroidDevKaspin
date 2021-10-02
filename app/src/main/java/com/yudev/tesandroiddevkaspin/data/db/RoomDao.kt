@@ -1,5 +1,6 @@
 package com.yudev.tesandroiddevkaspin.data.db
 
+import android.view.Menu
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.yudev.tesandroiddevkaspin.data.model.MenuBarang
@@ -24,6 +25,9 @@ interface MenuBarangDao{
 
     @Query("UPDATE MenuBarang SET stok = :stok WHERE kode_barang = :kode_barang")
     suspend fun updateStokByKodeBarang(kode_barang:String, stok:Int)
+
+    @Query("SELECT * FROM  MenuBarang WHERE kode_barang = :kode_barang LIMIT 1")
+    suspend fun selectBarangByKode(kode_barang:String):MenuBarang
 }
 
 @Dao
