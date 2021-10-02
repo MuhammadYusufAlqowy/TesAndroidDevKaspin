@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "593361893491",
+    "project_id": "tesandroiddevkaspin",
+    "storage_bucket": "tesandroiddevkaspin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:593361893491:android:37d9c80a96bdb93a699206",
+        "android_client_info": {
+          "package_name": "com.yudev.tesandroiddevkaspin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "593361893491-15ioq8m8ej0eqvntcepk5t9js2ulu71k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_NIJ3Qtlsj9iYUXnKrxMNipSOflF0HOI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "593361893491-15ioq8m8ej0eqvntcepk5t9js2ulu71k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
