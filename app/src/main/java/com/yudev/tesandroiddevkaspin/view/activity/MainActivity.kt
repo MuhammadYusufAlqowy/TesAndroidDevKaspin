@@ -10,7 +10,7 @@ import com.yudev.tesandroiddevkaspin.databinding.ActivityMainBinding
 class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.statusBarColor = ContextCompat.getColor(this, R.color.background)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.white)
         layout.apply {
             val inten = Intent(this@MainActivity,DaftarBarangActivity::class.java)
             btnBarang.setOnClickListener {

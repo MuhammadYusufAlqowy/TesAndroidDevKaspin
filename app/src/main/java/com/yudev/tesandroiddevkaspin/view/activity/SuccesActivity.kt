@@ -11,7 +11,7 @@ import com.yudev.tesandroiddevkaspin.databinding.ActivitySuccesBinding
 class SuccesActivity : BaseActivity<ActivitySuccesBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.statusBarColor = ContextCompat.getColor(this, R.color.background)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.white)
         layout.apply {
             btnHome.setOnClickListener {
                 startActivity(Intent(this@SuccesActivity,MainActivity::class.java))
