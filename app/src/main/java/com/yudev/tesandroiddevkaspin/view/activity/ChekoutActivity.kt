@@ -2,13 +2,10 @@ package com.yudev.tesandroiddevkaspin.view.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.firestore.FirebaseFirestore
 import com.yudev.tesandroiddevkaspin.data.INTEN_KEY
-import com.yudev.tesandroiddevkaspin.data.INTEN_VALUE
 import com.yudev.tesandroiddevkaspin.data.adapter.AdapterTransaksi
 import com.yudev.tesandroiddevkaspin.data.db.RoomDB
 import com.yudev.tesandroiddevkaspin.data.model.OrderBarang
@@ -30,6 +27,7 @@ class ChekoutActivity : BaseActivity<ActivityChekoutBinding>() {
         val db = RoomDB.getDatabase(this)!!
 
         layout.apply {
+            toolbar.setNavigationOnClickListener { onBackPressed() }
             if (order.isNullOrEmpty()) {
                 btnSaveOrder.setText("Save Order")
                 db.getTransaksi().select().observe(this@ChekoutActivity) {
@@ -42,11 +40,11 @@ class ChekoutActivity : BaseActivity<ActivityChekoutBinding>() {
                                     dialog.setMessage("Yakin ingin menghapus ${item.nama_barang}?")
                                     dialog.setPositiveButton("Ya") { d, i ->
                                         loading.show()
-                                        CoroutineScope(Dispatchers.Main).launch {
+                                        CoroutineScope(Main).launch {
                                             db.getTransaksi().delete(item)
                                             d.dismiss()
                                             loading.dismiss(500)
-                                            root.snack("Barang berhasil dihapus!")
+                                            root.snack("Barang berhasil dihapus!",btnSubmit)
                                         }
                                     }
                                     dialog.setNegativeButton("Tidak") { d, i ->
@@ -94,7 +92,7 @@ class ChekoutActivity : BaseActivity<ActivityChekoutBinding>() {
                                         it.listItem.remove(item)
                                         transaksi = it.listItem
                                         it.notifyDataSetChanged()
-                                        root.snack("Barang berhasil dihapus!")
+                                        root.snack("Barang berhasil dihapus!", btnSubmit)
                                         d.dismiss()
                                     }
                                     dialog.setNegativeButton("Tidak") { d, i ->
@@ -115,7 +113,7 @@ class ChekoutActivity : BaseActivity<ActivityChekoutBinding>() {
             btnSaveOrder.setOnClickListener {
                 if (order.isNullOrEmpty()) {
                     val dialog = MaterialAlertDialogBuilder(this@ChekoutActivity)
-                    dialog.setMessage("Ud order?")
+                    dialog.setMessage("Save order?")
                     dialog.setPositiveButton("Ya") { d, i ->
                         loading.show()
                         ff.get().addOnSuccessListener { l ->
@@ -133,9 +131,14 @@ class ChekoutActivity : BaseActivity<ActivityChekoutBinding>() {
                                 list_order = transaksi.toMutableList()
                             )
                             ff.document("KO-$kode").set(data).addOnSuccessListener {
-                                root.snack("Order berhasil disimpan!")
+                                root.snack("Order berhasil disimpan!", btnSubmit)
                                 d.dismiss()
                                 loading.dismiss()
+                                CoroutineScope(Main).launch {
+                                    db.getTransaksi().deleteAll()
+                                    startActivity(Intent(this@ChekoutActivity,DaftarTransaksiActivity::class.java))
+                                    finish()
+                                }
                             }
                         }
 
@@ -152,7 +155,7 @@ class ChekoutActivity : BaseActivity<ActivityChekoutBinding>() {
                         ff.document(order).update("list_order",transaksi).addOnSuccessListener {
                             loading.dismiss(500)
                             d.dismiss()
-                            root.snack("Order berhasil diupdate!")
+                            root.snack("Order berhasil diupdate!", btnSubmit)
                         }
                     }
                     dialog.setNegativeButton("Tidak") { d, i ->

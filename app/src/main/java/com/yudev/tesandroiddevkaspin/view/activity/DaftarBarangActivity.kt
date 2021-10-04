@@ -88,6 +88,7 @@ class DaftarBarangActivity : BaseActivity<ActivityDaftarBarangBinding>() {
                     }
                 }
                 db.getTransaksi().select().observe(this@DaftarBarangActivity) { list->
+                    btnAction.isEnabled = list?.sumOf { it.jumlah }!! > 0
                     btnAction.text = "Chekout (${list?.sumOf { it.jumlah }})"
                 }
             }

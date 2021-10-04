@@ -20,6 +20,7 @@ class DaftarTransaksiActivity : BaseActivity<ActivityDaftarTransaksiBinding>() {
         super.onCreate(savedInstanceState)
         val db = FirebaseFirestore.getInstance()
         layout.apply {
+            toolbar.setNavigationOnClickListener { onBackPressed() }
             loading.show()
             db.collection("order")
                 .addSnapshotListener { value, error ->
